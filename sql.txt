@@ -1,0 +1,33 @@
+1. Необходимо прислать DDL скрипт структуры таблиц и связи между ними.
+
+CREATE TABLE dbo.driver(
+id_driver int NOT NULL,
+fio varchar(50)
+PRIMARY KEY (id_driver)
+)
+go
+
+CREATE TABLE dbo.car(
+id_car int NOT NULL,
+name_car varchar(30),
+PRIMARY KEY (id_car)
+)
+go
+
+CREATE TABLE dbo.driver_car(
+id_driver int,
+id_car int,
+date_driver_car datetime,
+FOREIGN KEY(id_driver) REFERENCES dbo.driver(id_driver),
+FOREIGN KEY(id_car) REFERENCES dbo.car(id_car),
+PRIMARY KEY (id_driver, id_car)
+)
+go
+
+2. Вывести историю, кто когда и какой машиной управлял.
+
+select 
+dbo.driver.fio, dbo.car.name_car, dbo.driver_car.date from dbo.driver inner join
+ dbo.driver_car on dbo.driver.id_driver=dbo.driver_car.id_driver inner join dbo.car on dbo.driver_car.id_car = dbo.car.id_car
+
+
